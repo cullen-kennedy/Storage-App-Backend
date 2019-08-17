@@ -1,28 +1,27 @@
-import ModelBase from './modelbase'
+
 import pool from '../dbconnection';
 import Item from './item'
 
-export default class Container extends ModelBase {
+export default class Container {
     constructor(data) {
-        super()
         this.id = data.id
         this.name = data.name
-        this.desc = data.desc
-        this.date_created = data.date_created
+        this.date_entered = data.date_entered
         this.category_id = data.category_id
+        this.category_name = data.category_name
     }
 
-    static async getContainerItems(id) {
-        try {
-            const response = await pool.query(`SELECT *
-                                                FROM items i
-                                                INNER JOIN containers c 
-                                                ON i.container_id = c.id
-                                                WHERE c.id = ?`, [id])
+    static async getAll() {
+        try { 
+            //implicit joins
+            const response = await pool.query(`select con.id, con.name, con.date_entered, con.category_id, cat.name
+                                                from containers con, categories cat
+                                                where con.category_id = cat.id`)
 
             var resultJson = JSON.stringify(response[0]);
-    
+            console.log(resultJson)
             resultJson = JSON.parse(resultJson);
+           
     
             if (resultJson.length === 0) {
                 return [404, null]
@@ -40,6 +39,32 @@ export default class Container extends ModelBase {
             return [500, null]
         }
     }
+
+
+    static async getCategoryContainers(id) {
+
+        try {
+            const response = await pool.query(`select con.id, con.name, con.date_entered, cat.id, cat.name
+            from containers con, categories cat where cat.id = con.category_id and cat.id = ?`, [id])
+            var resultJson = JSON.stringify(response[0]);
+    
+            resultJson = JSON.parse(resultJson);
+    
+            var categoryList = new Array();
+            resultJson.forEach((resource) => {
+            categoryList.push(new this(resource))
+        })
+        return [null, categoryList]  
+        }
+        catch(e) {
+            console.error(e)
+            return [500, null]
+        }  
+    }
+
+    
+
+    
 }
 
 

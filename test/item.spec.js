@@ -13,8 +13,20 @@ describe('/GET items', () => {
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('array');
-            res.body.length.should.be.eql(3)
             done();
+        })
+    })
+})
+
+
+describe('/GET containeritems', () => {
+    it('Should get all items in a specific container', (done) => {
+        chai.request(server)
+        .get('/api/containers/4/items')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('array');
+            done()
         })
     })
 })

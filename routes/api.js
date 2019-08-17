@@ -14,17 +14,25 @@ router.get('/', function(req, res, next) {
 });
 
 /**
- * models/:id routes only tested in postman. 
- *  */
+ * Bare minimum of get methods here
+ * for front end prototype.
+ * Will most likely be adding more
+ */
+
+//Get all items indifferent to category or container
+//More useful for quick lookup with name query parameter
 router.get('/items', ItemsController.getAll)
-router.get('/items/:id', ItemsController.getById)
 
+//Get containers by category
+//Better for browsing - eg look up my movie
 router.get('/categories', CategoriesController.getAll)
-router.get('/categories/:id', CategoriesController.getById)
+router.get('/categories/:id/containers', ContainersController.getCategoryContainers)
 
+//Get items by container
+//Better for managing the storage
 router.get('/containers', ContainersController.getAll)
-router.get('/containers/:id', ContainersController.getById)
-router.get('/containers/:id/items', ContainersController.getContainerItems)
+router.get('/containers/:id/items', ItemsController.getContainerItems)
+
 
 
 //Then more post, delete, update etc....

@@ -12,26 +12,25 @@ describe('/GET containers', () => {
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('array');
-            res.body.length.should.be.eql(3)
             done();
         })
     })
 })
 
 //Add test for containers/:id 
-
-
-describe('/GET containeritems', () => {
-    it('Should get all items in a specific container', (done) => {
+describe('GET categorycontainers', () => {
+    it('Should get all containers', (done) => {
         chai.request(server)
-        .get('/api/containers/1/items')
+        .get('/api/categories/4/containers')
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('array');
-            res.body.length.should.be.eql(2)
-            done()
+            done();
         })
     })
 })
+
+
+
 
 //add test for categories/:id/items failure
