@@ -12,21 +12,57 @@ describe('/GET items', () => {
         .get('/api/items')
         .end((err, res) => {
             res.should.have.status(200);
-            res.body.should.be.a('array');
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
+
+describe('/GET items?search=a', () => {
+    it('Should search for items', (done) => {
+        chai.request(server)
+        .get('/api/items?search=a')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
             done();
         })
     })
 })
 
 
-describe('/GET containeritems', () => {
-    it('Should get all items in a specific container', (done) => {
+describe('/GET items?search=', () => {
+    it('Should search for nothing therefore return nothing', (done) => {
         chai.request(server)
-        .get('/api/containers/4/items')
+        .get('/api/items?search=')
         .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('array');
-            done()
+            res.should.have.status(404);
+            done();
         })
     })
 })
+
+describe('/GET items?pageNumber=3', () => {
+    it('Invalid query parameters', (done) => {
+        chai.request(server)
+        .get('/api/items?pageNumber=3')
+        .end((err, res) => {
+            res.should.have.status(400);
+            done();
+        })
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+

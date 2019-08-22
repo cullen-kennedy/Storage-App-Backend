@@ -5,10 +5,11 @@ import cors from 'cors'
 import router from './routes/api'
 
 const app = express();
-app.use(cors());
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
+
 app.use('/api', router)
 
 app.listen(CONFIG.port, () => {

@@ -5,7 +5,7 @@ const router = express.Router();
 
 //import * as UserController from '../controllers/user.controller'
 import ContainersController from '../controllers/containers.controller'
-import CategoriesController from '../controllers/categories.controller'
+import ContainerItemsController from '../controllers/containerItems.controller'
 import ItemsController from '../controllers/items.controller'
 
 
@@ -13,28 +13,18 @@ router.get('/', function(req, res, next) {
     res.json({status:"success", message:"House Storage API", data:{"version_number":"v1.0.0"}})
 });
 
-/**
- * Bare minimum of get methods here
- * for front end prototype.
- * Will most likely be adding more
- */
 
-//Get all items indifferent to category or container
-//More useful for quick lookup with name query parameter
+/**
+ * optional query : ?search=""
+ */
 router.get('/items', ItemsController.getAll)
 
-//Get containers by category
-//Better for browsing - eg look up my movie
-router.get('/categories', CategoriesController.getAll)
-router.get('/categories/:id/containers', ContainersController.getCategoryContainers)
+/**
+ * Parameters : :id is container id
+ * To add : '/containers' endpoint with filter query for categories and location as well
+ */
+router.get('/containers/:id', ContainersController.getContainerById)
+router.get('/containers/:id/items', ContainerItemsController.getContainerItems)
 
-//Get items by container
-//Better for managing the storage
-router.get('/containers', ContainersController.getAll)
-router.get('/containers/:id/items', ItemsController.getContainerItems)
-
-
-
-//Then more post, delete, update etc....
 
 export default router

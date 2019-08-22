@@ -24,7 +24,6 @@ const login = function(req, res) {
                           "failed":"error ocurred"
                         })
                 }else{
-                        console.log(response.results)
                         if(results.length > 0) {
                                 if(results[0].password === password) {
                                         var token = jwt.sign({ id: results[0].id }, CONFIG.jwt_encryption, {
