@@ -22,12 +22,22 @@ export default class Item {
                 var response = await pool.execute(SQL.getItemCountWithSearch, [search])
                 var totalCount = response[0][0].totalCount
                 if (totalCount === 0) 
-                    return [404, "No Items Found"]
+                    return [404, {Message: "No Items Found"}]
             }catch (err) {
                 return [500, err]
             }
             try{
                 var response = await pool.execute(SQL.findAllItemsWithSearch, [search])
+
+                var resultJson = JSON.stringify(response[0]);
+                resultJson = JSON.parse(resultJson);
+                
+                var itemList = new Array();
+                resultJson.forEach((resource) => {
+                    itemList.push(new this(resource))
+                })
+
+                return [200, itemList] 
             }catch (err) {
                 return [500, err]
             }  
@@ -37,26 +47,31 @@ export default class Item {
                 var response = await pool.execute(SQL.getItemCount)
                 var totalCount = response[0][0].totalCount
                 if (totalCount === 0) {
-                    return [404, "No Items Found"]
-        }
-            }catch (err) {
-                return [500, err]
+                    return [404, {Message: "No Items Found"}]
+            }
+            }
+            catch (err) {
+                return [500, {Message: "Error finding item count"}]
             }
             try{
                 var response = await pool.execute(SQL.findAllItems)
-            }catch (err) {
-                return [500, err]
+
+                var resultJson = JSON.stringify(response[0]);
+                resultJson = JSON.parse(resultJson);
+                
+                var itemList = new Array();
+                resultJson.forEach((resource) => {
+                    itemList.push(new this(resource))
+                })
+
+                return [200, itemList] 
+            }
+            catch (err) {
+                console.error(err.message)
+                return [500, {Message: "Error fidning all items"}]
             }  
         }
         
-        var resultJson = JSON.stringify(response[0]);
-        resultJson = JSON.parse(resultJson);
         
-        var itemList = new Array();
-        resultJson.forEach((resource) => {
-            itemList.push(new this(resource))
-        })
-
-        return [null, itemList] 
     }       
 }

@@ -1,22 +1,50 @@
 import Item from '../database/models/item.model'
 import ItemResourceParameters from '../helpers/itemResourceParameters'
 import { Mapper } from '../helpers/mappingProfile';
+import { create } from 'domain';
 
 const ItemsController = {
 
-  /**
-   * Accepts ?search="" as req.query.search
-   * returns 200 for result
-   * returns 404 for no items found
-   * returns 500 if thrown error
+/**
+   * @api {get} items Find items
+   * @apiName GetItems
+   * @apiGroup Item
+   *
+   * @apiParam {String} search Search string for a substring contained in item name.
+   *
+   * @apiSuccess {Array} Payload List of desired items.
+   * 
+   * @apiSuccessExample Success-Response:
+   *     HTTP/1.1 200 OK
+   *     {
+   *       "payload": [{
+   *            "id": 1,
+   *             "name": "V",
+   *             "link": "api/items/1",
+   *             "date_entered": "2019-08-22T04:00:00.000Z",
+   *             "rel": {
+   *                 "name": "Box3",
+   *                 "link": "api/containers/3"
+   *              }
+   *           }]
+   *     }
+   *
+   * @apiError BadRequest Search parameters are invalid.
+   * @apiError NotFound No items found.
+   *
+   * @apiErrorExample Error-Response:
+   *     HTTP/1.1 400 Bad Request
+   *     {
+   *       Message: "Bad request"
+   *     }
    */
   async getAll(req, res) {
 
-      //If no search return everything. Also if not supported queries specified return bad request
+      //If no search, return everything. Also if not supported queries, return bad request
       if (req.query.search === undefined) {
         var params = null
         if (Object.entries(req.query).length > 0) {
-          res.status(400).json("Bad request")
+          res.status(400).json({Message: "Bad request"})
           return
         }
       }
@@ -24,20 +52,24 @@ const ItemsController = {
       else {
         var params = new ItemResourceParameters(req.query.search)
       }
-
-    const [err, result] = await Item.findAll(params)
-      if(!err){
-        let itemsToReturn = []
-        result.forEach((resource) => {
-          itemsToReturn.push(Mapper.itemToDto(resource))
-        })
-        res.status(200).json({"payload": itemsToReturn})
+      try {
+        const [status, result] = await Item.findAll(params)
+        if(status === 200){
+          let itemsToReturn = []
+          result.forEach((resource) => {
+            itemsToReturn.push(Mapper.itemToDto(resource))
+          })
+          res.status(status).json({"payload": itemsToReturn})
+        }
+        else {
+          res.status(status).json(result)
+        }
       }
-      else {
-        res.status(err).json(result)
+      catch(err) {
+        console.error(err.message)
+        res.status(500).json({Message: "Exception in ItemsController"})
       }
   }
-  
 }
 
 export default ItemsController

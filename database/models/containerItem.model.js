@@ -11,26 +11,57 @@ export default class ContainerItem {
 
     }
 
-    static async getContainerItems(id) {
+    static async getContainerItems(params) {
         try { 
             
-            const response = await pool.query(SQL.getContainerItems, [id])
+            const response = await pool.query(SQL.getContainerItems, [params.containerId])
 
             if (response[0].length === 0) {
-                return [404, "No Items Found for this container"]
+                return [404, {Message: "No Items Found for this container"}]
             }
             else {
-                var resultJson = JSON.stringify(response[0]);
+                let resultJson = JSON.stringify(response[0]);
                 resultJson = JSON.parse(resultJson);
-                var itemList = new Array()
+                let itemList = new Array()
                 resultJson.forEach((resource) => {
                     itemList.push(new this(resource))
                 })
-                return [null, itemList]  
+                return [200, itemList]  
             }
         }
         catch(err) {
-            return [500, err]
+            console.error(err.message)
+            return [500, {Message: "Error getting container items"}]
         }
     }
+
+    static async createContainerItem(item) {
+        try{
+            await pool.execute(SQL.createContainerItem, [item.name, item.date_entered, item.container_id])
+            return [201, {Message: "success"}] //Need to add other checks?
+        }
+        catch(err) {
+            console.error(err.message)
+            return [500, {Message: "Error creating container item"}]
+        }
+    }
+
+    static async getContainerItem(params) {
+        try{
+            const response = await pool.execute(SQL.getContainerItem, [params.itemId, params.containerId])
+
+            if (!response[0][0]) {
+                return [404, {Message: "No Item Found in this container"}]
+            }
+            let resultJson = JSON.stringify(response[0][0]);
+            resultJson = JSON.parse(resultJson);
+            let itemToReturn = new this(resultJson)
+            return [200, itemToReturn]
+        }
+        catch(err) {
+            console.error(err.message)
+            return [500, {Message: "Error getting container item"}]
+        }
+    }
+
 }

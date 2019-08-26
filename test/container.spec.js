@@ -12,6 +12,11 @@ describe('/GET containers/3', () => {
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
+            res.body.should.have.property('id');
+            res.body.should.have.property('name');
+            res.body.should.have.property('link');
+            res.body.should.have.property('date_entered');
+            res.body.should.have.property('rel');
             done();
         })
     })
@@ -45,7 +50,7 @@ describe('/GET containersitems/3/items', () => {
         .get('/api/containers/3/items')
         .end((err, res) => {
             res.should.have.status(200);
-            res.body.should.be.a('object');
+            res.body.should.be.a('array');
             done();
         })
     })
@@ -73,9 +78,15 @@ describe('/GET containers/20/items', () => {
     })
 })
 
+describe('/GET /containers/3/items/1', () => {
+    it('Should get item from container', (done) => {
+        chai.request(server)
+        .get('/api/containers/3/items/1')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
 
-
-
-
-
-//add test for categories/:id/items failure

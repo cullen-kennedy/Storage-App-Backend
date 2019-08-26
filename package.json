@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --require @babel/register --require babel-polyfill './test/*.spec.js'",
-    "testitems": "cross-env NODE_ENV=test mocha --require @babel/register --require babel-polyfill './test/container.spec.js'",
+    "testcontainers": "cross-env NODE_ENV=test mocha --require @babel/register --require babel-polyfill './test/container.spec.js'",
     "start": "cross-env NODE_ENV=dev node ./dist/main.js",
     "build": "webpack",
     "server": "babel-node ./src/bin/www"
+  },
+  "apidoc": {
+    "title": "Custom apiDoc browser title",
+    "url" : "/api/"
   },
   "keywords": [],
   "author": "",

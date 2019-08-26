@@ -15,10 +15,9 @@ export default class Container {
     static async getContainerById(id) {
         try{
  
-            var response = await pool.execute(SQL.getContainerByid, [id])
-            
+            const response = await pool.execute(SQL.getContainerByid, [id])
             if (!response[0][0]) {
-                return [404, "Container not found"]
+               return [404, {Message: "Container not found"}]
             }
 
             let resultJson = JSON.stringify(response[0][0]);
@@ -26,10 +25,11 @@ export default class Container {
 
             let containerToReturn = new this(resultJson)
 
-            return [null, containerToReturn] 
+            return [200, containerToReturn] 
     
         }catch (err) {
-            return [500, err]
+            console.error(err.message)
+            return [500, {Message: "Error getting container by id"}]
         }
     }
 
