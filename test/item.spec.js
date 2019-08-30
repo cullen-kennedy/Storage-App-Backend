@@ -30,18 +30,6 @@ describe('/GET items?search=a', () => {
     })
 })
 
-
-describe('/GET items?search=', () => {
-    it('Should search for nothing therefore return nothing', (done) => {
-        chai.request(server)
-        .get('/api/items?search=')
-        .end((err, res) => {
-            res.should.have.status(404);
-            done();
-        })
-    })
-})
-
 describe('/GET items?pageNumber=3', () => {
     it('Invalid query parameters', (done) => {
         chai.request(server)

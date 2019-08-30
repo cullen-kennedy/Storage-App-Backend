@@ -6,15 +6,18 @@ const CategoriesController = {
      * @apiName GetCategories
      * @apiGroup Category
      *
-     * @apiSuccess {Number} id Unique id of desired category.
-     * @apiSuccess {String} name Name of the category.
+     * @apiSuccess {Category[]} - List of categories, "-" is only a placeholder.
+     * @apiSuccess {Number} -.id Unique id of desired category.
+     * @apiSuccess {String} -.name Name of the category.
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
-     *     [{
-     *       "id": 1,
-     *       "name": "Movies"
-     *     }]
+     *     [
+     *         {
+     *              "id": 1,
+     *              "name": "Movies"
+     *         },...
+     *     ]
      */
     async getAllCategories(req, res) {
         try {

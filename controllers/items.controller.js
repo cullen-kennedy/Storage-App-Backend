@@ -6,31 +6,38 @@ import { create } from 'domain';
 const ItemsController = {
 
 /**
-   * @api {get} items Find items
+   * @api {get} items Request items
    * @apiName GetItems
    * @apiGroup Item
    *
    * @apiParam {String} search Search string for a substring contained in item name.
    *
-   * @apiSuccess {Array} Payload List of desired items.
+   * @apiSuccess {Object[]} payload List of desired items
+   * @apiSuccess {Number} payload.id Unique id of selected item
+   * @apiSuccess {String} payload.name Item name
+   * @apiSuccess {String} payload.date_entered Date of entry
+   * @apiSuccess {Object} payload.rel Simple nested container relationship
+   * @apiSuccess {String} payload.rel.name Name of related container
+   * @apiSuccess {String} payload.rel.link Link to related container
    * 
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    *     {
-   *       "payload": [{
-   *            "id": 1,
-   *             "name": "V",
-   *             "link": "api/items/1",
-   *             "date_entered": "2019-08-22T04:00:00.000Z",
-   *             "rel": {
-   *                 "name": "Box3",
-   *                 "link": "api/containers/3"
-   *              }
-   *           }]
+   *       "payload": [
+   *            {
+   *                "id": 1,
+   *                "name": "V",
+   *                "link": "api/items/1",
+   *                "date_entered": "2019-08-22T04:00:00.000Z",
+   *                "rel": {
+   *                    "name": "Box3",
+   *                    "link": "api/containers/3"
+   *                 }
+   *           },...
+   *        ]
    *     }
    *
-   * @apiError BadRequest Search parameters are invalid.
-   * @apiError NotFound No items found.
+   * @apiError BadRequest Search parameters are invalid
    *
    * @apiErrorExample Error-Response:
    *     HTTP/1.1 400 Bad Request

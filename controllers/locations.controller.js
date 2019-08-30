@@ -7,15 +7,18 @@ const LocationsController = {
      * @apiName GetLocations
      * @apiGroup Location
      *
-     * @apiSuccess {int} id Unique id of the location.
-     * @apiSuccess {String} name Name of the location.
+     * @apiSuccess {Object[]} - List of locations, "-" is only a placeholder.
+     * @apiSuccess {int} -.id Unique id of selected location
+     * @apiSuccess {String} -.name Name of the location
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
-     *     [{
-     *       "id": 1,
-     *       "name": "Garage"
-     *     }]
+     *     [
+     *          {
+     *              "id": 1,
+     *              "name": "Garage"
+     *          },...
+     *     ]
      */
     async getAllLocations(req, res) {
         try {

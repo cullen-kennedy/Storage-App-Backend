@@ -18,14 +18,7 @@ export default class Item {
         if (itemResourceParameters !== null) {
             //add wildcards %search%
             var search = "%" + itemResourceParameters.search + "%"
-            try{  
-                var response = await pool.execute(SQL.getItemCountWithSearch, [search])
-                var totalCount = response[0][0].totalCount
-                if (totalCount === 0) 
-                    return [404, {Message: "No Items Found"}]
-            }catch (err) {
-                return [500, err]
-            }
+            
             try{
                 var response = await pool.execute(SQL.findAllItemsWithSearch, [search])
 
@@ -43,16 +36,7 @@ export default class Item {
             }  
         }
         else {
-            try{
-                var response = await pool.execute(SQL.getItemCount)
-                var totalCount = response[0][0].totalCount
-                if (totalCount === 0) {
-                    return [404, {Message: "No Items Found"}]
-            }
-            }
-            catch (err) {
-                return [500, {Message: "Error finding item count"}]
-            }
+            
             try{
                 var response = await pool.execute(SQL.findAllItems)
 
@@ -68,7 +52,7 @@ export default class Item {
             }
             catch (err) {
                 console.error(err.message)
-                return [500, {Message: "Error fidning all items"}]
+                return [500, {Message: "Error finding all items"}]
             }  
         }
         

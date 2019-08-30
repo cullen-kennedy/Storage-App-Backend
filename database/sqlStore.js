@@ -50,7 +50,7 @@ export const getContainerItem = `select
 
 export const createContainerItem =   `insert into items (name, date_entered, container_id) values (?,?,?)` 
 
-
+export const createContainer =   `insert into containers (name, date_entered, category_id, location_id) values (?,?,?,?)` 
 
 export const getItemCountWithSearch = `SELECT count(*) as totalCount from items i, containers c where c.id = i.container_id and i.name like ?`                                     
 export const getItemCount = `SELECT count(*) as totalCount from items i, containers c where c.id = i.container_id`  

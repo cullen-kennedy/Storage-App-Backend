@@ -16,18 +16,14 @@ export default class ContainerItem {
             
             const response = await pool.query(SQL.getContainerItems, [params.containerId])
 
-            if (response[0].length === 0) {
-                return [404, {Message: "No Items Found for this container"}]
-            }
-            else {
-                let resultJson = JSON.stringify(response[0]);
-                resultJson = JSON.parse(resultJson);
-                let itemList = new Array()
-                resultJson.forEach((resource) => {
-                    itemList.push(new this(resource))
-                })
-                return [200, itemList]  
-            }
+            let resultJson = JSON.stringify(response[0]);
+            resultJson = JSON.parse(resultJson);
+            let itemList = new Array()
+            resultJson.forEach((resource) => {
+                itemList.push(new this(resource))
+            })
+            return [200, itemList]  
+            
         }
         catch(err) {
             console.error(err.message)
@@ -51,7 +47,7 @@ export default class ContainerItem {
             const response = await pool.execute(SQL.getContainerItem, [params.itemId, params.containerId])
 
             if (!response[0][0]) {
-                return [404, {Message: "No Item Found in this container"}]
+                return [404, {Message: "Item with Iid Not Found in this container"}]
             }
             let resultJson = JSON.stringify(response[0][0]);
             resultJson = JSON.parse(resultJson);

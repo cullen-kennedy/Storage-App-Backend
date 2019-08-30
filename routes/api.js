@@ -23,13 +23,13 @@ router.get('/items', ItemsController.getAll)
 //CONTAINERS
 /**
  * To do: 
- *      1. containers endpoint with filter query for categories and location
- *      2. creating a new container
+ *      1. containers endpoint with filter query for categories and location DONE
+ *      2. creating a new container DONE
  *      Finish these endpoints then focus on front end app, then do users auth/registration, then update, edit, delete etc...
  */
-//router.get('/containers', ContainersController.getAllContainers)
-//router.post('/containers', ContainersController.createContainer)
 
+router.post('/containers', ContainersController.createContainer)
+router.get('/containers', ContainersController.getAllContainers)
 router.get('/containers/:id', ContainersController.getContainerById)
 
 //CONTAINER ITEMS

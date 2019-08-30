@@ -90,3 +90,14 @@ describe('/GET /containers/3/items/1', () => {
     })
 })
 
+describe('/GET containers', () => {
+    it('Should get all containers', (done) => {
+        chai.request(server)
+        .get('/api/containers')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
