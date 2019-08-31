@@ -7,7 +7,7 @@ export default class ContainerItem {
         
         this.id = data.id
         this.name = data.name
-        this.date_entered = data.date_entered
+        this.dateEntered = data.date_entered
 
     }
 
@@ -33,7 +33,7 @@ export default class ContainerItem {
 
     static async createContainerItem(item) {
         try{
-            await pool.execute(SQL.createContainerItem, [item.name, item.date_entered, item.container_id])
+            await pool.execute(SQL.createContainerItem, [item.name, item.dateEntered, item.containerId])
             return [201, {Message: "success"}] //Need to add other checks?
         }
         catch(err) {

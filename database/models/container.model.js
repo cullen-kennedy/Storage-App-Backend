@@ -6,9 +6,9 @@ export default class Container {
     constructor(data) {
         this.id = data.id
         this.name = data.name
-        this.date_entered = data.date_entered
-        this.category_name = data.category_name
-        this.location_name = data.location_name
+        this.dateEntered = data.date_entered
+        this.categoryName = data.category_name
+        this.locationName = data.location_name
     }
 
 
@@ -86,7 +86,7 @@ export default class Container {
     
     static async createContainer(container) {
         try{
-            await pool.execute(SQL.createContainer, [container.name, container.date_entered, container.category_id, container.location_id])
+            await pool.execute(SQL.createContainer, [container.name, container.dateEntered, container.categoryId, container.locationId])
             return [201, {Message: "success"}] //Need to add other checks?
         }
         catch(err) {

@@ -15,7 +15,7 @@ const ItemsController = {
    * @apiSuccess {Object[]} payload List of desired items
    * @apiSuccess {Number} payload.id Unique id of selected item
    * @apiSuccess {String} payload.name Item name
-   * @apiSuccess {String} payload.date_entered Date of entry
+   * @apiSuccess {String} payload.dateEntered Date of entry
    * @apiSuccess {Object} payload.rel Simple nested container relationship
    * @apiSuccess {String} payload.rel.name Name of related container
    * @apiSuccess {String} payload.rel.link Link to related container
@@ -28,7 +28,7 @@ const ItemsController = {
    *                "id": 1,
    *                "name": "V",
    *                "link": "api/items/1",
-   *                "date_entered": "2019-08-22T04:00:00.000Z",
+   *                "dateEntered": "2019-08-22T04:00:00.000Z",
    *                "rel": {
    *                    "name": "Box3",
    *                    "link": "api/containers/3"

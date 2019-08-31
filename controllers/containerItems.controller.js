@@ -16,7 +16,7 @@ const ContainerItemsController = {
      * @apiSuccess {ContainerItem[]} - List of container items, "-" is only a placeholder
      * @apiSuccess {Number} -.id Unique id for selected item 
      * @apiSuccess {String} -.name Name of the item
-     * @apiSuccess {String} -.date_entered Date of entry
+     * @apiSuccess {String} -.dateEntered Date of entry
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
@@ -24,7 +24,7 @@ const ContainerItemsController = {
      *          {
      *              "id": 11,
      *              "name": "Item Name",
-     *              "date_entered": "2019-08-26T04:00:00.000Z"
+     *              "dateEntered": "2019-08-26T04:00:00.000Z"
      *          },...
      *     ]
      *
@@ -169,14 +169,14 @@ const ContainerItemsController = {
      *
      * @apiSuccess {Number} id Unique id for selected item
      * @apiSuccess {String} name Name of the item
-     * @apiSuccess {String} date_entered  Date of entry
+     * @apiSuccess {String} dateEntered  Date of entry
      *
      * @apiSuccessExample Success-Response:
      *     HTTP/1.1 200 OK
      *     {
      *       "id": 11,
      *       "name": "Item name",
-     *       "date_entered": "2019-08-26T04:00:00.000Z"
+     *       "dateEntered": "2019-08-26T04:00:00.000Z"
      *     }
      *
      * @apiError BadRequest parameters are not valid or not included

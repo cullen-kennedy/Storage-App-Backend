@@ -3,10 +3,10 @@ export default class ContainerDto {
         this.id = container.id
         this.name = container.name
         this.link = "api/containers/" + container.id
-        this.date_entered = container.date_entered
+        this.dateEntered = container.dateEntered
         this.rel = {
-            category_name: container.category_name,
-            location_name: container.location_name
+            categoryName: container.categoryName,
+            locationName: container.locationName
         }
     }
 }

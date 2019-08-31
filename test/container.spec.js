@@ -15,7 +15,7 @@ describe('/GET containers/3', () => {
             res.body.should.have.property('id');
             res.body.should.have.property('name');
             res.body.should.have.property('link');
-            res.body.should.have.property('date_entered');
+            res.body.should.have.property('dateEntered');
             res.body.should.have.property('rel');
             done();
         })

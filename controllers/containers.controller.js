@@ -18,10 +18,10 @@ const ContainersController = {
    * @apiSuccess {Number} id Unique id of selected container
    * @apiSuccess {String} name Name of the container
    * @apiSuccess {String} link  Self referential link
-   * @apiSuccess {String} date_entered  Date of entry
+   * @apiSuccess {String} dateEntered Date of entry
    * @apiSuccess {Object} rel Simple nested relation
-   * @apiSuccess {String} rel.category_name Name of related category
-   * @apiSuccess {String} rel.location_name Name of related location
+   * @apiSuccess {String} rel.categoryName Name of related category
+   * @apiSuccess {String} rel.locationName Name of related location
    * 
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -29,10 +29,10 @@ const ContainersController = {
    *       "id": 11,
    *       "name": "Item name",
    *       "link": "api/containers/2",
-   *       "date_entered": "2019-08-26T04:00:00.000Z",
+   *       "dateEntered": "2019-08-26T04:00:00.000Z",
    *       "rel": {
-   *          "category_name": "Movies",
-   *          "location_name": "Attic"
+   *          "categoryName": "Movies",
+   *          "locationName": "Attic"
    *       }
    *     }
    *
@@ -76,10 +76,10 @@ const ContainersController = {
    * @apiSuccess {Number} payload.id Unique id of selected container
    * @apiSuccess {String} payload.name Name of the container
    * @apiSuccess {String} payload.link  Self referential link
-   * @apiSuccess {String} payload.date_entered  Date of entry
+   * @apiSuccess {String} payload.dateEntered  Date of entry
    * @apiSuccess {Object} payload.rel Simple nested relation
-   * @apiSuccess {String} payload.rel.category_name Name of related category
-   * @apiSuccess {String} payload.rel.location_name Name of related location
+   * @apiSuccess {String} payload.rel.categoryName Name of related category
+   * @apiSuccess {String} payload.rel.locationName Name of related location
    * 
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
@@ -88,10 +88,10 @@ const ContainersController = {
    *          "id": 11,
    *          "name": "Item name",
    *          "link": "api/containers/2",
-   *          "date_entered": "2019-08-26T04:00:00.000Z",
+   *          "dateEntered": "2019-08-26T04:00:00.000Z",
    *          "rel": {
-   *              "category_name": "Movies",
-   *              "location_name": "Attic"
+   *              "categoryName": "Movies",
+   *              "locationName": "Attic"
    *          }
    *        },...
    *    ]
@@ -141,8 +141,8 @@ const ContainersController = {
      *
      * @apiParam {Number} Cid Unique ID of container
      * @apiParam {String} name Name of new item 
-     * @apiParam {Number} category_id Unique id of related category
-     * @apiParam {String} location_id Unique id of related location
+     * @apiParam {Number} categoryId Unique id of related category
+     * @apiParam {String} locationId Unique id of related location
      * 
      * @apiSuccess {String} Message A simple confirmation message
      *
@@ -161,17 +161,17 @@ const ContainersController = {
      *     }
      */
   async createContainer(req, res) {
-    if (Object.keys(req.body).length != 3 || !req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('category_id') || !req.body.hasOwnProperty('location_id')){
+    if (Object.keys(req.body).length != 3 || !req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('categoryId') || !req.body.hasOwnProperty('locationId')){
       res.status(400).json({Message: "request body is invalid."})
       return
     }
 
     let date = new Date()
     let name = req.body.name
-    let category_id = req.body.category_id
-    let location_id = req.body.location_id
+    let categoryId = req.body.categoryId
+    let locationId = req.body.locationId
 
-    let containerToCreate = new ContainerForCreationDto(name, date, category_id, location_id)
+    let containerToCreate = new ContainerForCreationDto(name, date, categoryId, locationId)
 
     try {
       const [status, result] = await Container.createContainer(containerToCreate)

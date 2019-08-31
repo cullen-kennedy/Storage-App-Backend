@@ -3,10 +3,10 @@ export default class ItemDto {
         this.id = item.id
         this.name = item.name
         this.link = "api/items/" + item.id
-        this.date_entered = item.date_entered
+        this.dateEntered = item.dateEntered
         this.rel = {
-             name: item.container_name,
-             link: "api/containers/" + item.container_id
+             name: item.containerName,
+             link: "api/containers/" + item.containerId
             }
     }
 }

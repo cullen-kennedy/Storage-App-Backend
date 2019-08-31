@@ -7,9 +7,9 @@ export default class Item {
         
         this.id = data.id
         this.name = data.name
-        this.date_entered = data.date_entered
-        this.container_id = data.container_id,
-        this.container_name = data.container_name
+        this.dateEntered = data.date_entered
+        this.containerId = data.container_id,
+        this.containerName = data.container_name
     }
 
     static async findAll(itemResourceParameters) {
