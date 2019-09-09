@@ -11,10 +11,10 @@ export default class ContainerItem {
 
     }
 
-    static async getContainerItems(params) {
+    static async getContainerItems(params, userId) {
         try { 
             
-            const response = await pool.query(SQL.getContainerItems, [params.containerId])
+            const response = await pool.query(SQL.getContainerItems, [userId, params.containerId])
 
             let resultJson = JSON.stringify(response[0]);
             resultJson = JSON.parse(resultJson);
@@ -33,7 +33,7 @@ export default class ContainerItem {
 
     static async createContainerItem(item) {
         try{
-            await pool.execute(SQL.createContainerItem, [item.name, item.dateEntered, item.containerId])
+            await pool.execute(SQL.createContainerItem, [item.name, item.dateEntered, item.containerId, item.userId])
             return [201, {Message: "success"}] //Need to add other checks?
         }
         catch(err) {
@@ -42,9 +42,9 @@ export default class ContainerItem {
         }
     }
 
-    static async getContainerItem(params) {
+    static async getContainerItem(params, userId) {
         try{
-            const response = await pool.execute(SQL.getContainerItem, [params.itemId, params.containerId])
+            const response = await pool.execute(SQL.getContainerItem, [userId, params.itemId, params.containerId])
 
             if (!response[0][0]) {
                 return [404, {Message: "Item with Iid Not Found in this container"}]

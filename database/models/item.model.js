@@ -12,15 +12,15 @@ export default class Item {
         this.containerName = data.container_name
     }
 
-    static async findAll(itemResourceParameters) {
-
+    static async findAll(itemResourceParameters, userId) {
+        
         //If itemResourceParameters are null, search all items
         if (itemResourceParameters !== null) {
             //add wildcards %search%
             var search = "%" + itemResourceParameters.search + "%"
             
             try{
-                var response = await pool.execute(SQL.findAllItemsWithSearch, [search])
+                var response = await pool.execute(SQL.findAllItemsWithSearch, [userId, search])
 
                 var resultJson = JSON.stringify(response[0]);
                 resultJson = JSON.parse(resultJson);
@@ -38,7 +38,7 @@ export default class Item {
         else {
             
             try{
-                var response = await pool.execute(SQL.findAllItems)
+                var response = await pool.execute(SQL.findAllItems, [userId])
 
                 var resultJson = JSON.stringify(response[0]);
                 resultJson = JSON.parse(resultJson);
@@ -54,8 +54,6 @@ export default class Item {
                 console.error(err.message)
                 return [500, {Message: "Error finding all items"}]
             }  
-        }
-        
-        
+        }           
     }       
 }

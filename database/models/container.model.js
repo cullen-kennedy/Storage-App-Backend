@@ -12,10 +12,10 @@ export default class Container {
     }
 
 
-    static async getContainerById(id) {
+    static async getContainerById(id, userId) {
         try{
  
-            const response = await pool.execute(SQL.getContainerByid, [id])
+            const response = await pool.execute(SQL.getContainerByid, [userId, id])
             if (!response[0][0]) {
                return [404, {Message: "Container not found"}]
             }
@@ -33,12 +33,12 @@ export default class Container {
         }
     }
 
-    static async getAllContainers(params) {
+    static async getAllContainers(params, userId) {
+
         //Will build query here, rather than keep it in sql store
         //Avoids having multiple queries for the filters... like in /items
-        let flag = false;
         let filters = []
-  
+
         let query = `select
                         con.id,
                         con.name,
@@ -46,24 +46,23 @@ export default class Container {
                         cat.name as category_name,
                         loc.name as location_name
                     from
-                        containers con
+                        containers con  
                     inner join categories cat on con.category_id = cat.id
                     inner join locations loc on loc.id = con.location_id`
+         
+        query += ` where con.user_id = ?`
+        filters.push(userId)
 
         if (params.category) {
-            query += ` WHERE cat.name = ?`
+            query += ` and cat.name = ?`
             filters.push(params.category)
-            flag = true
         }          
         if (params.location) {
-            if (flag === true) {
-                query += ` and loc.name = ?`
-            }
-            else {
-                query += ` WHERE loc.name = ?`
-            }
+            query += ` and loc.name = ?`
             filters.push(params.location)
         } 
+
+    
 
         try{
             var response = await pool.execute(query, filters)
@@ -86,7 +85,7 @@ export default class Container {
     
     static async createContainer(container) {
         try{
-            await pool.execute(SQL.createContainer, [container.name, container.dateEntered, container.categoryId, container.locationId])
+            await pool.execute(SQL.createContainer, [container.name, container.dateEntered, container.categoryId, container.locationId, container.userId])
             return [201, {Message: "success"}] //Need to add other checks?
         }
         catch(err) {

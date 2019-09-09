@@ -3,7 +3,7 @@ export const findAllItemsWithSearch = `select
                                       from 
                                         items i
                                       inner join containers c
-                                      on c.id = i.container_id and i.name like ?`
+                                      on c.id = i.container_id where i.user_id = ? and i.name like ?`
 
 export const findAllItems = `select 
                               i.id, 
@@ -14,7 +14,8 @@ export const findAllItems = `select
                             from  
                               items i
                             inner join containers c
-                            on c.id = i.container_id;`                                
+                            on c.id = i.container_id
+                            where i.user_id = ?`                                
 
 export const getContainerByid = `select
                                   con.id,
@@ -27,6 +28,7 @@ export const getContainerByid = `select
                                 inner join categories cat on con.category_id = cat.id
                                 inner join locations loc on loc.id = con.location_id
                                 where
+                                  con.user_id = ? and
                                   con.id = ?;`
 
 //Just simple containeritem queries. Not returning any join for now
@@ -37,7 +39,7 @@ export const getContainerItems = `select
                                   from
                                     items i
                                   where
-                                    i.container_id = ?`
+                                    i.user_id = ? and i.container_id = ?`
 
 export const getContainerItem = `select
                                     i.id,
@@ -46,11 +48,11 @@ export const getContainerItem = `select
                                   from
                                     items i
                                   where 
-                                    i.id = ? and i.container_id = ?`                                    
+                                    i.user_id = ? and i.id = ? and i.container_id = ?`                                    
 
-export const createContainerItem =   `insert into items (name, date_entered, container_id) values (?,?,?)` 
+export const createContainerItem =   `insert into items (name, date_entered, container_id, user_id) values (?,?,?,?)` 
 
-export const createContainer =   `insert into containers (name, date_entered, category_id, location_id) values (?,?,?,?)` 
+export const createContainer =   `insert into containers (name, date_entered, category_id, location_id, user_id) values (?,?,?,?,?)` 
 
 export const getItemCountWithSearch = `SELECT count(*) as totalCount from items i, containers c where c.id = i.container_id and i.name like ?`                                     
 export const getItemCount = `SELECT count(*) as totalCount from items i, containers c where c.id = i.container_id`  

@@ -53,7 +53,7 @@ const ContainersController = {
       return
     }
     try {
-      const [status, result] = await Container.getContainerById(req.params.id)
+      const [status, result] = await Container.getContainerById(req.params.id, req.UserId)
       if (status === 200) {
         res.status(status).json(Mapper.containerToDto(result))
       }
@@ -112,11 +112,11 @@ const ContainersController = {
       res.status(400).json({Message: "Bad request"})
       return
     }
-
+    //empty query string is same as not including query.. different from item search... maybe change
     const queries = new ContainerResourceParameters(req.query)
     
     try {
-      const [status, result] = await Container.getAllContainers(queries)
+      const [status, result] = await Container.getAllContainers(queries, req.UserId)
       if(status === 200){
         let containersToReturn = []
         result.forEach((resource) => {
@@ -171,7 +171,7 @@ const ContainersController = {
     let categoryId = req.body.categoryId
     let locationId = req.body.locationId
 
-    let containerToCreate = new ContainerForCreationDto(name, date, categoryId, locationId)
+    let containerToCreate = new ContainerForCreationDto(name, date, categoryId, locationId, req.UserId)
 
     try {
       const [status, result] = await Container.createContainer(containerToCreate)

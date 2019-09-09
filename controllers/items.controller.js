@@ -47,6 +47,7 @@ const ItemsController = {
    */
   async getAll(req, res) {
 
+
       //If no search, return everything. Also if not supported queries, return bad request
       if (req.query.search === undefined) {
         var params = null
@@ -60,7 +61,7 @@ const ItemsController = {
         var params = new ItemResourceParameters(req.query.search)
       }
       try {
-        const [status, result] = await Item.findAll(params)
+        const [status, result] = await Item.findAll(params, req.UserId)
         if(status === 200){
           let itemsToReturn = []
           result.forEach((resource) => {

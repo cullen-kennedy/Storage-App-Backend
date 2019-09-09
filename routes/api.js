@@ -9,6 +9,9 @@ import ContainerItemsController from '../controllers/containerItems.controller'
 import ItemsController from '../controllers/items.controller'
 import LocationsController from '../controllers/locations.controller'
 import CategoriesController from '../controllers/categories.controller'
+import UsersController from '../controllers/users.controller'
+
+import authJwt from '../middleware/verifyJWT'
 
 
 router.get('/', function(req, res, next) {
@@ -18,7 +21,7 @@ router.get('/', function(req, res, next) {
 //ITEMS
 
 
-router.get('/items', ItemsController.getAll)
+router.get('/items', [authJwt.verifyToken], ItemsController.getAll)
 
 //CONTAINERS
 /**
@@ -28,15 +31,15 @@ router.get('/items', ItemsController.getAll)
  *      Finish these endpoints then focus on front end app, then do users auth/registration, then update, edit, delete etc...
  */
 
-router.post('/containers', ContainersController.createContainer)
-router.get('/containers', ContainersController.getAllContainers)
-router.get('/containers/:id', ContainersController.getContainerById)
+router.post('/containers', [authJwt.verifyToken], ContainersController.createContainer)
+router.get('/containers', [authJwt.verifyToken], ContainersController.getAllContainers)
+router.get('/containers/:id', [authJwt.verifyToken], ContainersController.getContainerById)
 
 //CONTAINER ITEMS
 
-router.get('/containers/:Cid/items', ContainerItemsController.getContainerItems)
-router.get('/containers/:Cid/items/:Iid', ContainerItemsController.getContainerItem)
-router.post('/containers/:Cid/items', ContainerItemsController.create)
+router.get('/containers/:Cid/items', [authJwt.verifyToken], ContainerItemsController.getContainerItems)
+router.get('/containers/:Cid/items/:Iid', [authJwt.verifyToken], ContainerItemsController.getContainerItem)
+router.post('/containers/:Cid/items', [authJwt.verifyToken], ContainerItemsController.create)
 
 
 //CONTAINER ATTRIBUTES
@@ -48,5 +51,8 @@ router.post('/containers/:Cid/items', ContainerItemsController.create)
 
 router.get('/locations', LocationsController.getAllLocations)
 router.get('/categories', CategoriesController.getAllCategories)
+
+router.post('/users/signup', UsersController.signUp)
+router.post('/users/signin', UsersController.login)
 
 export default router

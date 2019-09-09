@@ -52,7 +52,7 @@ const ContainerItemsController = {
         }
 
         try {
-            const [err, result] = await Container.getContainerById(containerItemParams.containerId)
+            const [err, result] = await Container.getContainerById(containerItemParams.containerId, req.UserId)
             if (err !== 200) {
                 res.status(err).json(result)
                 return
@@ -64,7 +64,7 @@ const ContainerItemsController = {
         }
         
         try {
-            const [err, result] = await ContainerItem.getContainerItems(containerItemParams)
+            const [err, result] = await ContainerItem.getContainerItems(containerItemParams, req.UserId)
             if(!err){
                 let itemsToReturn = []
                 result.forEach((resource) => {
@@ -128,7 +128,7 @@ const ContainerItemsController = {
         }
 
         try {
-            const [err, result] = await Container.getContainerById(containerItemParams.containerId)
+            const [err, result] = await Container.getContainerById(containerItemParams.containerId, req.UserId)
             if (err !== 200) {
                 res.status(err).json(result)
                 return
@@ -142,7 +142,7 @@ const ContainerItemsController = {
         let date = new Date()
         let name = req.body.name
 
-        let itemToCreate = new ItemForCreationDto(name, date, containerItemParams)
+        let itemToCreate = new ItemForCreationDto(name, date, containerItemParams, req.UserId)
         try {
             const [status, result] = await ContainerItem.createContainerItem(itemToCreate)
 
@@ -201,7 +201,7 @@ const ContainerItemsController = {
         } 
 
         try {
-            const [err, result] = await Container.getContainerById(containerItemParams.containerId)
+            const [err, result] = await Container.getContainerById(containerItemParams.containerId, req.UserId)
             if (err !== 200) {
                 res.status(err).json(result)
                 return
@@ -213,7 +213,7 @@ const ContainerItemsController = {
         }
 
         try {
-            const [status, result] = await ContainerItem.getContainerItem(containerItemParams)
+            const [status, result] = await ContainerItem.getContainerItem(containerItemParams, req.UserId)
             if(status === 200){
                 let itemToReturn = Mapper.containerItemToDto(result)
                 res.status(status).json(itemToReturn)
