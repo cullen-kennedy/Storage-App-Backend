@@ -9,7 +9,12 @@ You can view the documentation [here](https://cullen-kennedy.github.io/House-Sto
 
 ~~2. container creation~~
 
-3. User Authentication, registration, etc
+~~3. User Authentication, registration, etc~~ *sort of*
+
+4. Delete Container / Item
+
+5. Update Container / Item
+
 
 The Front end can be found [here](https://github.com/cullen-kennedy/Storage-App).
 
