@@ -1,7 +1,6 @@
 import Item from '../database/models/item.model'
 import ItemResourceParameters from '../helpers/itemResourceParameters'
 import { Mapper } from '../helpers/mappingProfile';
-import { create } from 'domain';
 
 const ItemsController = {
 
@@ -78,6 +77,7 @@ const ItemsController = {
         res.status(500).json({Message: "Exception in ItemsController"})
       }
   }
+
 }
 
 export default ItemsController

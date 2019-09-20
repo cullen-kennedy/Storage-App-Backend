@@ -17,9 +17,9 @@ export class Mapper {
     }
 
     static containerItemToDto(containerItem) {
-        let Itemdto = new ContainerItemDto(containerItem)
+        let ContainerItemdto = new ContainerItemDto(containerItem)
         
-        return Itemdto
+        return ContainerItemdto
     }
 
 }

@@ -1,3 +1,5 @@
+//Obsolete due to user auth
+
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 import server from '../server'

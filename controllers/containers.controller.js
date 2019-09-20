@@ -135,12 +135,11 @@ const ContainersController = {
   },
 
   /**
-     * @api {post} containers Add new item to container
+     * @api {post} containers Add new container
      * @apiName PostContainer
      * @apiGroup Container
      *
-     * @apiParam {Number} Cid Unique ID of container
-     * @apiParam {String} name Name of new item 
+     * @apiParam {String} name Name of new container 
      * @apiParam {Number} categoryId Unique id of related category
      * @apiParam {String} locationId Unique id of related location
      * 
@@ -188,6 +187,7 @@ const ContainersController = {
       res.status(500).json({Message: "Exception in ContainerController"})
   }
   }
+
 }
 
 export default ContainersController

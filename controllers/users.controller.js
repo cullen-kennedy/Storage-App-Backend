@@ -31,7 +31,7 @@ const UsersController = {
                                                 var token = jwt.sign({ id: response[0][0].id }, CONFIG.jwt_encryption, {
                                                         expiresIn: 86400 // expires in 24 hours
                                                       });
-                                                res.status(200).send({ auth: true, accessToken: token });
+                                                res.status(200).send({ auth: true, accessToken: token, expiresIn: 86400 });
                                         }
                                         else{
                                                 res.send({

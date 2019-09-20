@@ -227,5 +227,6 @@ const ContainerItemsController = {
             res.status(500).json({Message: "Exception in ContainerItemsController"})
         }
     }
+
 }
 export default ContainerItemsController
